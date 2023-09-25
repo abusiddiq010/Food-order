@@ -13,6 +13,7 @@ const Header = (props) => {
       <div className={classes["main-image"]}>
         <img src={Meals} />
       </div>
+      <p>hello</p>
     </Fragment>
   );
 };
