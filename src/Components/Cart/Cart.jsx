@@ -9,6 +9,7 @@ const Cart = (props) => {
   const totalAmount = cartCtx.totalAmount;
   console.log(totalAmount);
   const hasItems = cartCtx?.items?.length >= 0;
+  console.log(hasItems);
 
   const cartItemRemoveHandler = (id) => {
     console.log(id);

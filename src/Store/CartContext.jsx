@@ -17,12 +17,12 @@ const cartReducer = (state, action) => {
   console.log(itemPrice);
   const itemQuantity = parseInt(action?.item?.quantity);
   console.log(itemQuantity);
-  if (action.type === "ADD") {
-    const existingItemsIndex = state.items.findIndex(
-      (item) => item.id == action.item.id
+  if (action?.type === "ADD") {
+    const existingItemsIndex = state?.items?.findIndex(
+      (item) => item?.id === action?.item?.id
     );
     console.log(existingItemsIndex);
-    let existingItems = state.items[existingItemsIndex];
+    let existingItems = state?.items[existingItemsIndex];
     console.log(existingItems);
     let updatedItems;
 
@@ -30,15 +30,15 @@ const cartReducer = (state, action) => {
     if (existingItems) {
       const updatedItem = {
         ...existingItems,
-        quantity: existingItems.quantity + action.item.quantity,
+        quantity: existingItems?.quantity + action?.item?.quantity,
       };
 
-      updatedItems = [...state.items];
+      updatedItems = [...state?.items];
       updatedItems[existingItemsIndex] = updatedItem;
       console.log(updatedItem);
       console.log(updatedItems);
     } else {
-      updatedItems = state.items.concat(action.item);
+      updatedItems = state?.items?.concat(action?.item);
     }
     const updatedTotalAmount = state.totalAmount + itemPrice * itemQuantity;
     console.log("Price:", action.item.price);
@@ -51,7 +51,7 @@ const cartReducer = (state, action) => {
 
   //statemanagement logic for "REMOVE"
   if (action.type === "REMOVE") {
-    const existingItemsIndex = state.items.findIndex(
+    const existingItemsIndex = state?.items?.findIndex(
       (item) => item.id === action.id
     );
     console.log(existingItemsIndex);
@@ -64,19 +64,28 @@ const cartReducer = (state, action) => {
     const updatedTotalAmount = state.totalAmount - existingItems?.price;
     console.log(updatedTotalAmount);
 
-    if (existingItems.quantity === 1) {
-      updatedItem = state.items.filter((item) => item.id !== action.id);
+    if (existingItems?.quantity === 1) {
+      updatedItems = state?.items?.filter((item) => {
+        console.log(item.id, action.id);
+
+        return item?.id !== action?.id;
+      });
+      console.log(updatedItems);
     } else {
       updatedItem = {
         ...existingItems,
         quantity: existingItems.quantity - 1,
       };
       updatedItems = [...state.items];
-      console.log(updatedItems);
+
       updatedItems[existingItemsIndex] = updatedItem;
+      console.log(updatedItems);
     }
+    console.log(updatedItems);
+
     return {
       items: updatedItems,
+
       totalAmount: updatedTotalAmount,
     };
   }
