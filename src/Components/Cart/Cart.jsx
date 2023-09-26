@@ -8,25 +8,26 @@ const Cart = (props) => {
   const cartCtx = useContext(CartContext);
   const totalAmount = cartCtx.totalAmount;
   console.log(totalAmount);
-  const hasItems = cartCtx.items.length > 0;
-  const cartItemRemoveHandler = (item) => {};
-  const cartItemAddHandler = (id) => {};
+  const hasItems = cartCtx?.items?.length >= 0;
 
-  const cartItems = (
-    <ul>
-      <li>
-        {cartCtx.items.map(({ available, price, quantity }) => (
-          <CartItem
-            price={price}
-            quantity={quantity}
-            name={available}
-            onRemove={cartItemRemoveHandler}
-            onAdd={cartItemAddHandler}
-          />
-        ))}
-      </li>
-    </ul>
-  );
+  const cartItemRemoveHandler = (id) => {
+    console.log(id);
+    cartCtx.removeItem(id);
+  };
+  const cartItemAddHandler = (item) => {
+    cartCtx.addItem({ ...item, quantity: 1 });
+  };
+
+  const cartItems = cartCtx?.items?.map((item) => (
+    <CartItem
+      key={item.id} // Make sure to provide a unique key when mapping over items
+      price={item.price}
+      quantity={item.quantity}
+      name={item.available}
+      onRemove={() => cartItemRemoveHandler(item.id)}
+      onAdd={() => cartItemAddHandler(item)}
+    />
+  ));
   console.log(cartCtx.items);
 
   return (
